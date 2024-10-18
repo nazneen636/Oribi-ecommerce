@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BredCumb from "../layers/BredCumb";
 import Pagination from "../layers/Pagination";
 import { IoGrid } from "react-icons/io5";
-import { FaThList } from "react-icons/fa";
+import { FaPlus, FaThList } from "react-icons/fa";
 import Container from "../layers/Container";
 import { BiSolidRightArrow } from "react-icons/bi";
+import FilterLi from "../layers/filterLi";
+import axios from "axios";
 
 let subCat = [
   {
@@ -37,16 +39,27 @@ const ProductPage = () => {
   };
   // =============================
   let [showCat, setShowCat] = useState();
-  const manageCat = () => {
+  let [allProduct, setAllProduct] = useState([]);
+
+  let manageCat = () => {
     setShowCat(!showCat);
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      let res = await axios.get("https://dummyjson.com/products");
+      setAllProduct(res.data.products);
+    };
+    getData();
+  }, []);
+
   return (
     <div>
       <Container>
         <BredCumb />
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-10">
           {/* ==================category=========== */}
-          <div className="col-span-1 bg-slate-200">
+          <div className="col-span-1">
             <div>
               <h2
                 onClick={manageCat}
@@ -62,9 +75,26 @@ const ProductPage = () => {
 
               {showCat && (
                 <ul>
-                  {subCat.map((item) => (
-                    <li key={item.id}>{item.name}</li>
+                  {allProduct.map((item) => (
+                    <li
+                      key={item.id}
+                      className="py-3 border-b border-b-[#f0f0f0]"
+                    >
+                      {item.category}
+                    </li>
                   ))}
+                  {/* <FilterLi categoryName="Category 1" DDmIcon={true}>
+                    {subCat.map((item) => (
+                      <li key={item.id} className="py-3">
+                        {item.name}
+                      </li>
+                    ))}
+                  </FilterLi>
+                  <FilterLi categoryName="Category 2" DDmIcon={false} />
+                  <FilterLi categoryName="Category 3" DDmIcon={true}>
+                    <li className="py-3">Sub Category 1</li>
+                    <li className="py-3">Sub Category 2</li>
+                  </FilterLi> */}
                 </ul>
               )}
             </div>
