@@ -8,7 +8,7 @@ import axios from "axios";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const ProductFeature = () => {
-  let [product, setProduct] = useState([]);
+  let [product, setProduct] = useState();
   let [size, setSize] = useState(false);
   let [sizeContent, setSizeContent] = useState("S");
   let [quantity, setQuantity] = useState(1);
@@ -22,14 +22,8 @@ const ProductFeature = () => {
   };
   useEffect(() => {
     const getData = async () => {
-      try {
-        let response = await axios.get("https://dummyjson.com/products");
-        setProduct(response.data.products);
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      } finally {
-        setLoading(false);
-      }
+      let response = await axios.get("https://dummyjson.com/products");
+      setProduct(response.data.products);
     };
     getData();
   }, []);
