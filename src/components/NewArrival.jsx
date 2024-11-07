@@ -143,11 +143,16 @@ const NewArrival = () => {
   let [newProduct, setNewProduct] = useState([]);
   useEffect(() => {
     const getData = async () => {
-      let response = await axios.get("https://dummyjson.com/products");
-      setNewProduct(response.data.products);
+      try {
+        let response = await axios.get("https://dummyjson.com/products");
+        setNewProduct(response.data.products);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
     getData();
   }, []);
+
   const settings = {
     dots: false,
     arrows: true,
