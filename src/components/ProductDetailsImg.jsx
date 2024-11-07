@@ -19,6 +19,7 @@ const ProductDetailsImg = () => {
       price: 1899.99,
     },
   ];
+
   return (
     <div>
       <Container className="mb-24">
@@ -62,7 +63,9 @@ const ProductDetailsImg = () => {
                 <div className="grid grid-cols-3 w-1/2 py-6 bg-slate-100">
                   <span
                     onClick={() => {
-                      setQuantity(() => (quantity > 1 ? quantity-- : quantity));
+                      setQuantity((prevQuantity) =>
+                        prevQuantity > 1 ? prevQuantity - 1 : prevQuantity
+                      );
                     }}
                     className="text-xl font-bold text-[#262626] flex items-center justify-center cursor-pointer"
                   >
@@ -73,7 +76,7 @@ const ProductDetailsImg = () => {
                   </span>
                   <span
                     onClick={() => {
-                      setQuantity(() => quantity++);
+                      setQuantity((prevQuantity) => prevQuantity + 1);
                     }}
                     className="text-xl font-bold text-[#262626] flex items-center justify-center cursor-pointer"
                   >
