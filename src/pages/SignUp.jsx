@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import BredCumb from "../layers/BredCumb";
 import Container from "../layers/Container";
 import Heading from "../layers/Heading";
-("");
 import Btn from "../layers/Btn";
 import { IoMdEye } from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
@@ -84,157 +83,65 @@ const districts = [
 ];
 
 const SignUp = () => {
-  // =============usestate=============
-  let [firstName, setFirstName] = useState();
-  let [fNameErr, setfNameErr] = useState();
+  // State hooks for form values and errors
+  const [firstName, setFirstName] = useState("");
+  const [fNameErr, setfNameErr] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [lastNameErr, setLastNameErr] = useState("");
+  const [emailId, setEmailId] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneErr, setPhoneErr] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [repeatPasswordErr, setRepeatPasswordErr] = useState("");
+  const [addressOne, setAddressOne] = useState("");
+  const [addressOneErr, setAddressOneErr] = useState("");
+  const [city, setCity] = useState("");
+  const [cityErr, setCityErr] = useState("");
+  const [pCode, setPCode] = useState("");
+  const [pCodeErr, setPCodeErr] = useState("");
+  const [district, setDistrict] = useState("");
+  const [districtErr, setDistrictErr] = useState("");
+  const [division, setDivision] = useState("");
+  const [divisionErr, setDivisionErr] = useState("");
+  const [eye, setEye] = useState(true);
 
-  let [lastName, setlastName] = useState();
-  let [lastNameErr, setlastNameErr] = useState();
-
-  let [emailId, setemailId] = useState();
-  let [emailErr, setemailErr] = useState();
-
-  let [phone, setphone] = useState();
-  let [phoneErr, setphoneErr] = useState();
-
-  let [password, setpassword] = useState();
-  let [passwordErr, setpasswordErr] = useState();
-
-  let [repeatPassword, setrepeatPassword] = useState();
-  let [repeatPasswordErr, setrepeatPasswordErr] = useState();
-
-  let [addressOne, setaddressOne] = useState();
-  let [addressOneErr, setaddressOneErr] = useState();
-
-  let [city, setcity] = useState();
-  let [cityErr, setcityErr] = useState();
-
-  let [pCOde, setpCOde] = useState();
-  let [pCOdeErr, setpCOdeErr] = useState();
-
-  let [district, setdistrict] = useState();
-  let [districtErr, setdistrictErr] = useState();
-
-  let [division, setdivision] = useState();
-  let [divisionErr, setdivisionErr] = useState();
-
-  let [eye, setEye] = useState(true);
-  // =============usestate=============
-
-  // =============function=============
-  let manageFirstName = (element) => {
-    let fName = element.target.value;
-    setFirstName(fName);
-    setfNameErr("");
+  // Input change handlers
+  const handleInputChange = (setter, setterErr) => (e) => {
+    setter(e.target.value);
+    setterErr("");
   };
 
-  let manageLastName = (element) => {
-    let lName = element.target.value;
-    setlastName(lName);
-    setlastNameErr("");
+  // Password visibility toggle
+  const togglePasswordVisibility = () => setEye(!eye);
+
+  // Button click validation
+  const handleSubmit = () => {
+    if (!firstName) setfNameErr("First name is required");
+    if (!lastName) setLastNameErr("Last name is required");
+    if (!emailId) setEmailErr("Email is required");
+    if (!phone) setPhoneErr("Phone no is required");
+    if (!password) setPasswordErr("Password is required");
+    else if (!/^(?=.*[0-9])/.test(password))
+      setPasswordErr("Password must contain one digit from 1 to 9");
+    else if (!/^(?=.*[a-z])/.test(password))
+      setPasswordErr("Password must contain one lowercase letter");
+    else if (!/^(?=.*[A-Z])/.test(password))
+      setPasswordErr("Password must contain one uppercase letter");
+    else if (!/^(?=.*\W)/.test(password))
+      setPasswordErr("Password must contain one special character");
+    else if (!/^.{8,16}/.test(password))
+      setPasswordErr("Password must be 8-16 characters long");
+    if (!repeatPassword) setRepeatPasswordErr("Repeat password is required");
+    if (!addressOne) setAddressOneErr("Address is required");
+    if (!city) setCityErr("City is required");
+    if (!pCode) setPCodeErr("Post code is required");
+    if (!district) setDistrictErr("District is required");
+    if (!division) setDivisionErr("Division is required");
   };
 
-  let manageEmail = (element) => {
-    let email = element.target.value;
-    setemailId(email);
-    setemailErr("");
-  };
-
-  let managePhone = (element) => {
-    let phnNo = element.target.value;
-    setphone(phnNo);
-    setphoneErr("");
-  };
-
-  let managePassword = (element) => {
-    let passwd = element.target.value;
-    setpassword(passwd);
-    setpasswordErr("");
-  };
-
-  let manageRepeatPassword = (element) => {
-    let rPasswd = element.target.value;
-    setrepeatPassword(rPasswd);
-    setrepeatPasswordErr("");
-  };
-
-  let manageAddressOne = (element) => {
-    let address1 = element.target.value;
-    setaddressOne(address1);
-    setaddressOneErr("");
-  };
-
-  let managecity = (element) => {
-    let c = element.target.value;
-    city(c);
-    cityErr("");
-  };
-
-  let managepCOde = (element) => {
-    let code = element.target.value;
-    pCOde(code);
-    pCOdeErr("");
-  };
-
-  let manageDistrict = (element) => {
-    let dis = element.target.value;
-    district(dis);
-    districtErr("");
-  };
-
-  let manageDivision = (element) => {
-    let div = element.target.value;
-    division(div);
-    divisionErr("");
-  };
-
-  // --------btn function----------
-  let manageBtn = () => {
-    if (!firstName) {
-      setfNameErr("First name is required");
-    }
-    if (!lastName) {
-      setlastNameErr("Last name is required");
-    }
-    if (!emailId) {
-      setemailErr("Email is required");
-    }
-    if (!phone) {
-      setphoneErr("Phone no is required");
-    }
-    if (!password) {
-      setpasswordErr("Password is required");
-    } else if (!/^(?=.*[0-9])/.test(password)) {
-      setpasswordErr("Password must contain one digit from 1 to 9");
-    } else if (!/^(?=.*[a-z])/.test(password)) {
-      setpasswordErr("Password must contain one lowercase letter");
-    } else if (!/^(?=.*[A-Z])/.test(password)) {
-      setpasswordErr("Password must contain one uppercase letter");
-    } else if (!/^(?=.*\W)/.test(password)) {
-      setpasswordErr("Password must contain one special character");
-    } else if (!/^.{8,16}/.test(password)) {
-      setpasswordErr("Password must be 8-16 characters long");
-    }
-    if (!repeatPassword) {
-      setrepeatPasswordErr("Repeat password is required");
-    }
-    if (!addressOne) {
-      setaddressOneErr("Address is required");
-    }
-    if (!city) {
-      setcityErr("City is required");
-    }
-    if (!pCOde) {
-      setpCOdeErr("Post code is required");
-    }
-    if (!district) {
-      setdistrictErr("District is required");
-    }
-    if (!division) {
-      setdivisionErr("Division is required");
-    }
-  };
-  // =============function=============
   return (
     <div>
       <Container>
@@ -244,13 +151,11 @@ const SignUp = () => {
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the.
         </p>
-        {/* ========================================
-                personal details start
-        ======================================== */}
-        <div className="personalDetail pb-[69px] border-b  border-b-[#f0f0f09c]">
+
+        {/* Personal Details Section */}
+        <div className="personalDetail pb-[69px] border-b border-b-[#f0f0f09c]">
           <Heading className="mb-[42px]" headingText="Your Personal Details" />
           <div className="form flex flex-wrap gap-x-10 gap-y-8">
-            {/* ================================ */}
             <div className="w-[508px] flex flex-col gap-[10px] relative">
               <label
                 className="font-bold text-[16px] leading-[23px] text-[#262626]"
@@ -259,7 +164,7 @@ const SignUp = () => {
                 First Name
               </label>
               <input
-                onChange={manageFirstName}
+                onChange={handleInputChange(setFirstName, setfNameErr)}
                 value={firstName}
                 id="fName"
                 type="text"
@@ -270,7 +175,7 @@ const SignUp = () => {
                 {fNameErr}
               </p>
             </div>
-            {/* ============================ */}
+
             <div className="w-[508px] flex flex-col gap-[10px] relative">
               <label
                 className="font-bold text-[16px] leading-[23px] text-[#262626]"
@@ -279,7 +184,7 @@ const SignUp = () => {
                 Last Name
               </label>
               <input
-                onChange={manageLastName}
+                onChange={handleInputChange(setLastName, setLastNameErr)}
                 value={lastName}
                 id="lName"
                 type="text"
@@ -290,7 +195,7 @@ const SignUp = () => {
                 {lastNameErr}
               </p>
             </div>
-            {/* ================================ */}
+
             <div className="w-[508px] flex flex-col gap-[10px] relative">
               <label
                 className="font-bold text-[16px] leading-[23px] text-[#262626]"
@@ -299,7 +204,7 @@ const SignUp = () => {
                 Email address
               </label>
               <input
-                onChange={manageEmail}
+                onChange={handleInputChange(setEmailId, setEmailErr)}
                 value={emailId}
                 id="email"
                 type="text"
@@ -310,7 +215,7 @@ const SignUp = () => {
                 {emailErr}
               </p>
             </div>
-            {/* ================================ */}
+
             <div className="w-[508px] flex flex-col gap-[10px] relative">
               <label
                 className="font-bold text-[16px] leading-[23px] text-[#262626]"
@@ -319,7 +224,7 @@ const SignUp = () => {
                 Telephone
               </label>
               <input
-                onChange={managePhone}
+                onChange={handleInputChange(setPhone, setPhoneErr)}
                 value={phone}
                 id="phone"
                 type="text"
@@ -330,273 +235,86 @@ const SignUp = () => {
                 {phoneErr}
               </p>
             </div>
-            {/* ================================ */}
           </div>
         </div>
-        {/* ========================================
-                personal details end
-        ======================================== */}
-        {/* ========================================
-                new customer start
-        ======================================== */}
+
+        {/* New Customer Section */}
         <div className="newCustomer mt-[60px] pb-[69px] border-b border-b-[#f0f0f09c]">
           <Heading className="mb-[42px]" headingText="New Customer" />
           <div className="form flex flex-wrap gap-x-10 gap-y-6">
-            {/* ================================ */}
             <div className="w-[508px] flex flex-col gap-[10px] relative">
               <label
                 className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="address-1"
-              >
-                Address 1
-              </label>
-              <input
-                onChange={manageAddressOne}
-                value={addressOne}
-                id="address-1"
-                type="text"
-                placeholder="4279 Zboncak Port Suite 6212"
-                className="pb-4 border-b text-sm border-b-[#F0F0F0] outline-none text-[#262626] placeholder:text-[#767676]"
-              />
-              <p className="text-red-800 font-bold text-base absolute top-full left-0">
-                {addressOneErr}
-              </p>
-            </div>
-            {/* ================================ */}
-            <div className="w-[508px] flex flex-col gap-[10px]">
-              <label
-                className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="address-2"
-              >
-                Address 2
-              </label>
-              <input
-                id="address-2"
-                type="text"
-                placeholder="-"
-                className="pb-4 text-sm border-b border-b-[#F0F0F0] outline-none text-[#262626] placeholder:text-[#767676]"
-              />
-            </div>
-            {/* ================================ */}
-            <div className="w-[508px] flex flex-col gap-[10px] relative">
-              <label
-                className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="city"
-              >
-                City
-              </label>
-              <input
-                onChange={managecity}
-                value={city}
-                id="city"
-                type="text"
-                placeholder="Your city"
-                className="pb-4 border-b text-sm border-b-[#F0F0F0] outline-none text-[#262626] placeholder:text-[#767676]"
-              />
-              <p className="text-red-800 font-bold text-base absolute top-full left-0">
-                {cityErr}
-              </p>
-            </div>
-            {/* ================================ */}
-            <div className="w-[508px] flex flex-col gap-[10px] relative">
-              <label
-                className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="postCode"
-              >
-                Post Code
-              </label>
-              <input
-                onChange={managepCOde}
-                value={pCOde}
-                id="postCode"
-                type="text"
-                placeholder="05228"
-                className="pb-4 border-b text-sm border-b-[#F0F0F0] outline-none text-[#262626] placeholder:text-[#767676]"
-              />
-              <p className="text-red-800 font-bold text-base absolute top-full left-0">
-                {pCOdeErr}
-              </p>
-            </div>
-            {/* ================================ */}
-            <div className="w-[508px] flex flex-col gap-[10px] relative">
-              <label
-                className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="address-1"
-              >
-                Division
-              </label>
-              <select
-                onChange={manageDivision}
-                value={division}
-                className="py-2 outline-none pb-4 border-b text-sm border-b-[#F0F0F0] text-[#262626]"
-                name=""
-                id=""
-              >
-                <option className="" value="please select">
-                  Please select
-                </option>
-                {divisions.map((item, i) => (
-                  <option key={i} className="" value="please select">
-                    {item}
-                  </option>
-                ))}
-              </select>
-              <p className="text-red-800 font-bold text-base absolute top-full left-0">
-                {divisionErr}
-              </p>
-            </div>
-            <div className="w-[508px] flex flex-col gap-[10px] relative">
-              <label
-                className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="address-1"
-              >
-                District
-              </label>
-              <select
-                onChange={manageDistrict}
-                value={district}
-                className="py-2 outline-none pb-4 border-b text-sm border-b-[#F0F0F0] text-[#262626]"
-                name=""
-                id=""
-              >
-                <option className="" value="please select">
-                  Please select
-                </option>
-                {districts.map((item, i) => (
-                  <option key={i} className="" value="please select">
-                    {item}
-                  </option>
-                ))}
-              </select>
-              <p className="text-red-800 font-bold text-base absolute top-full left-0">
-                {districtErr}
-              </p>
-            </div>
-          </div>
-        </div>
-        {/* ========================================
-                new customer end
-        ======================================== */}
-
-        {/* ========================================
-                password start
-        ======================================== */}
-        <div className="password mt-[60px] pb-[69px] border-b border-b-[#f0f0f09c]">
-          <Heading className="mb-[42px]" headingText="Your Password" />
-          <div className="form flex flex-wrap gap-x-10 gap-y-6">
-            <div className="w-[508px] flex flex-col gap-[10px] relative">
-              <label
-                className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="passwd"
+                htmlFor="password"
               >
                 Password
               </label>
               <input
-                onChange={managePassword}
+                onChange={handleInputChange(setPassword, setPasswordErr)}
                 value={password}
-                id="passwd"
-                type={`${eye ? "password" : "text"}`}
-                placeholder="Password"
-                className="pb-4 border-b text-sm border-b-[#F0F0F0] outline-none text-[#262626] placeholder:text-[#767676]"
+                id="password"
+                type={eye ? "password" : "text"}
+                placeholder="Enter Password"
+                className="pb-4 text-sm border-b border-b-[#F0F0F0] outline-none text-[#262626] placeholder:text-[#767676]"
               />
+              {eye ? (
+                <IoMdEye
+                  onClick={togglePasswordVisibility}
+                  className="absolute top-[30px] right-[10px] cursor-pointer text-[#999]"
+                />
+              ) : (
+                <FaEyeSlash
+                  onClick={togglePasswordVisibility}
+                  className="absolute top-[30px] right-[10px] cursor-pointer text-[#999]"
+                />
+              )}
               <p className="text-red-800 font-bold text-base absolute top-full left-0">
                 {passwordErr}
               </p>
-              <IoMdEye
-                onClick={() => {
-                  setEye(!eye);
-                }}
-                className={`text-xl absolute right-4 bottom-4 ${
-                  eye ? "opacity-100" : "opacity-0"
-                }`}
-              />
-              <FaEyeSlash
-                onClick={() => {
-                  setEye(!eye);
-                }}
-                className={`text-xl absolute right-4 bottom-4 ${
-                  eye ? "opacity-0" : "opacity-100"
-                }`}
-              />
             </div>
-            {/* ============================ */}
+
             <div className="w-[508px] flex flex-col gap-[10px] relative">
               <label
                 className="font-bold text-[16px] leading-[23px] text-[#262626]"
-                htmlFor="rPassword"
+                htmlFor="repeatPassword"
               >
                 Repeat Password
               </label>
               <input
-                onChange={manageRepeatPassword}
+                onChange={handleInputChange(
+                  setRepeatPassword,
+                  setRepeatPasswordErr
+                )}
                 value={repeatPassword}
-                id="rPassword"
-                type={`${eye ? "password" : "text"}`}
+                id="repeatPassword"
+                type={eye ? "password" : "text"}
                 placeholder="Repeat Password"
                 className="pb-4 text-sm border-b border-b-[#F0F0F0] outline-none text-[#262626] placeholder:text-[#767676]"
               />
+              {eye ? (
+                <IoMdEye
+                  onClick={togglePasswordVisibility}
+                  className="absolute top-[30px] right-[10px] cursor-pointer text-[#999]"
+                />
+              ) : (
+                <FaEyeSlash
+                  onClick={togglePasswordVisibility}
+                  className="absolute top-[30px] right-[10px] cursor-pointer text-[#999]"
+                />
+              )}
               <p className="text-red-800 font-bold text-base absolute top-full left-0">
                 {repeatPasswordErr}
               </p>
-              <IoMdEye
-                onClick={() => {
-                  setEye(!eye);
-                }}
-                className={`text-xl absolute right-4 bottom-4 ${
-                  eye ? "opacity-100" : "opacity-0"
-                }`}
-              />
-              <FaEyeSlash
-                onClick={() => {
-                  setEye(!eye);
-                }}
-                className={`text-xl absolute right-4 bottom-4 ${
-                  eye ? "opacity-0" : "opacity-100"
-                }`}
-              />
             </div>
           </div>
         </div>
-        {/* ========================================
-                password end
-        ======================================== */}
-        <div className="flex items-center mt-16 mb-6">
-          <input
-            type="checkbox"
-            name="check"
-            id="check"
-            className="appearance-none relative after:absolute after:left-0 top-1/2 w-[11px]  h-[11px] border border-[#767676] checked:after:w-[7px] checked:after:h-[7px] checked:after:bg-[#767676] checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2"
+        <div className="action w-full mt-[50px]">
+          <Btn
+            className="btn-primary"
+            onClick={handleSubmit}
+            btnText="Sign Up"
           />
-          <label className="ml-4" htmlFor="check">
-            I have read and agree to the Privacy Policy
-          </label>
         </div>
-        <div className="flex gap-[33px] mb-[27px]">
-          <span>Subscribe Newsletter</span>
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              name="yes"
-              id="yes"
-              className="appearance-none relative after:absolute after:left-0 top-0 w-[11px]  h-[11px] border border-[#767676] checked:after:w-[7px] checked:after:h-[7px] checked:after:bg-[#767676] checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2"
-            />
-            <label htmlFor="yes" className="ml-4">
-              Yes
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              name="no"
-              id="no"
-              className="appearance-none relative after:absolute after:left-0 top-0 w-[11px]  h-[11px] border border-[#767676] checked:after:w-[7px] checked:after:h-[7px] checked:after:bg-[#767676] checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2"
-            />
-            <label htmlFor="no" className="ml-4">
-              No
-            </label>
-          </div>
-        </div>
-        <Btn onclick={manageBtn} btnText="Log in" />
       </Container>
     </div>
   );

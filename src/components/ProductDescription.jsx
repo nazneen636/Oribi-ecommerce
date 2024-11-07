@@ -6,11 +6,16 @@ const ProductDescription = () => {
   let [product, setProduct] = useState();
   useEffect(() => {
     const getData = async () => {
-      let res = await axios.get("https://dummyjson.com/products");
-      setProduct(res.data.products);
+      try {
+        let res = await axios.get("https://dummyjson.com/products");
+        setProduct(res.data.products);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
     };
     getData();
   }, []);
+
   return (
     <div>
       <Container>

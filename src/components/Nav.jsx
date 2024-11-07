@@ -122,7 +122,7 @@ const Nav = () => {
             <Li liText="Shop" className="px-8 md:px-0" to="/product" />
             <Li liText="About" className="px-8 md:px-0" to="/about" />
             <Li liText="Contacts" className="px-8 md:px-0" to="/contacts" />
-            <Li liText="Journal" className="px-8 md:px-0" to="/journal" />
+            <Li liText="Journal" className="px-8 md:px-0" to="/" />
             <Li liText="Sign up" className="px-8 md:px-0" to="/sign/up" />
           </ul>
         )}
