@@ -5,7 +5,7 @@ import { IoGrid } from "react-icons/io5";
 import { FaPlus, FaThList } from "react-icons/fa";
 import Container from "../layers/Container";
 import { BiSolidRightArrow } from "react-icons/bi";
-import FilterLi from "../layers/filterLi";
+// import FilterLi from "../layers/filterLi";
 import axios from "axios";
 
 let subCat = [
